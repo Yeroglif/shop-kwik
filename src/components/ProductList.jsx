@@ -4,7 +4,7 @@ import ProductFormModal from "./ProductFormModal";
 import ProductCard from "./ProductCard";
 
 export default function ProductList(props) {
-    const {products} = props
+    const {products, setSelectedproduct} = props
 
   const [isAdding, setIsAdding] = useState(false);
   return (
@@ -27,7 +27,7 @@ export default function ProductList(props) {
       )}
       {products.map((product, productIndex)=>{
         return (
-            <ProductCard key={productIndex} product={product} />
+            <ProductCard key={productIndex} product={product} setSelectedproduct={setSelectedproduct}/>
         )
       })}
     </div>

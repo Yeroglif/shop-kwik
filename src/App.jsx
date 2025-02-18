@@ -4,7 +4,7 @@ import ProductList from "./components/ProductList";
 import ProductView from "./components/ProductView";
 
 function App() {
-  const [selectedProduct, setSelectedproduct] = useState("");
+  const [selectedProduct, setSelectedproduct] = useState(null);
   const [products, setProducts] = useState([
     {
       id: 1,
@@ -16,7 +16,20 @@ function App() {
         height: 200,
       },
       weight: "200g",
-      comments: ["CommentModel", "CommentModel"],
+      comments: [
+        {
+          id: 3,
+          productId: 1,
+          description: "some text here",
+          date: "14:00 22.08.2021",
+        },
+        {
+          id: 3,
+          productId: 1,
+          description: "some text here",
+          date: "14:00 22.08.2021",
+        },
+      ],
     },
   ]);
 
@@ -35,9 +48,14 @@ function App() {
 
   return (
     <>
-      <Layout>
-        {!selectedProduct.trim() && <ProductList products={products} />}
-        {selectedProduct.trim() && <ProductView />}
+      <Layout setSelectedproduct={setSelectedproduct}>
+        {!selectedProduct && (
+          <ProductList
+            products={products}
+            setSelectedproduct={setSelectedproduct}
+          />
+        )}
+        {selectedProduct && <ProductView selectedProduct={selectedProduct} />}
       </Layout>
     </>
   );
