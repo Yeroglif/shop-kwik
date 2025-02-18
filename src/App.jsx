@@ -34,17 +34,22 @@ function App() {
   ]);
 
   function handleAddProduct(newProduct) {
+    newProduct.id = products[products.length-1].id+1
     const newProducts = [...products, newProduct];
     setProducts(newProducts);
-    handleSaveData(newProducts);
+    // handleSaveData(newProducts);
   }
 
-  function handleSaveData(currentProducts) {
-    localStorage.setItem(
-      "shop-kwik-products",
-      JSON.stringify({ products: currentProducts })
-    );
+  function handleDeleteProduct(productToDelete) {
+
   }
+
+  // function handleSaveData(currentProducts) {
+  //   localStorage.setItem(
+  //     "shop-kwik-products",
+  //     JSON.stringify({ products: currentProducts })
+  //   );
+  // }
 
   return (
     <>
@@ -53,6 +58,8 @@ function App() {
           <ProductList
             products={products}
             setSelectedproduct={setSelectedproduct}
+            handleAddProduct={handleAddProduct}
+            handleDeleteProduct={handleDeleteProduct}
           />
         )}
         {selectedProduct && <ProductView selectedProduct={selectedProduct} />}

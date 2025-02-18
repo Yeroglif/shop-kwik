@@ -4,7 +4,7 @@ import ProductFormModal from "./ProductFormModal";
 import ProductCard from "./ProductCard";
 
 export default function ProductList(props) {
-    const {products, setSelectedproduct} = props
+    const {products, setSelectedproduct, handleAddProduct, handleDeleteProduct} = props
 
   const [isAdding, setIsAdding] = useState(false);
   return (
@@ -22,7 +22,7 @@ export default function ProductList(props) {
             setIsAdding(false);
           }}
         >
-          <ProductFormModal />
+          <ProductFormModal setIsAdding={setIsAdding} handleAddProduct={handleAddProduct} />
         </Modal>
       )}
       {products.map((product, productIndex)=>{
