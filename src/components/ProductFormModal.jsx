@@ -2,7 +2,7 @@ import { useState } from "react";
 
 export default function ProductFormModal(props) {
   const { handleAddProduct, setIsAdding } = props;
-
+  //All form states
   const [name, setName] = useState("");
   const [count, setCount] = useState("");
   const [width, setWidth] = useState("");
@@ -11,6 +11,7 @@ export default function ProductFormModal(props) {
   const [imageUrl, setImageUrl] = useState("");
   return (
     <div>
+      {/* All form inputs */}
       <input
         type="text"
         placeholder="Enter product name"
@@ -27,21 +28,21 @@ export default function ProductFormModal(props) {
       />
       <input
         type="number"
-        placeholder="Enter width"
+        placeholder="Enter width (cm)"
         value={width}
         onChange={(e) => setWidth(e.target.value)}
         required
       />
       <input
         type="number"
-        placeholder="Enter height"
+        placeholder="Enter height (cm)"
         value={height}
         onChange={(e) => setHeight(e.target.value)}
         required
       />
       <input
         type="number"
-        placeholder="Enter weight"
+        placeholder="Enter weight (g)"
         value={weight}
         onChange={(e) => setWeight(e.target.value)}
         required
@@ -53,6 +54,7 @@ export default function ProductFormModal(props) {
         onChange={(e) => setImageUrl(e.target.value)}
         required
       />
+      {/* Button to add inputs to products */}
       <button
         onClick={() => {
           handleAddProduct({
@@ -64,15 +66,17 @@ export default function ProductFormModal(props) {
               width: width,
               height: height,
             },
-            weight: weight+"g",
-            comments: [{
+            weight: weight + "g",
+            comments: [
+              {
                 id: 0,
                 productId: 0,
                 description: "",
                 date: "",
-              },],
+              },
+            ],
           });
-          setIsAdding(false)
+          setIsAdding(false);
         }}
       >
         Confirm

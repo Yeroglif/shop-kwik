@@ -3,26 +3,33 @@ import Modal from "./Modal";
 import ProductFormModal from "./ProductFormModal";
 import ProductCard from "./ProductCard";
 import { collection, getDocs, onSnapshot } from "firebase/firestore";
-import { db } from "../../firebase"; 
+import { db } from "../../firebase";
 
 export default function ProductList(props) {
-    const {products, setSelectedproduct, handleAddProduct, handleDeleteProduct, setProducts} = props
-
+  //all props + delete(for later)
+  const {
+    products,
+    setSelectedproduct,
+    handleAddProduct,
+    handleDeleteProduct,
+    setProducts,
+  } = props;
+  // state to check if add product modal is up
   const [isAdding, setIsAdding] = useState(false);
-
+  // Load all data from db
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, "products"), (snapshot) => {
       const productList = snapshot.docs.map((doc) => ({
-        id: doc.id, // Firestore document ID
-        ...doc.data(), // Other product fields
+        id: doc.id,
+        ...doc.data(),
       }));
       setProducts(productList);
     });
 
-    return () => unsubscribe(); // Cleanup listener on unmount
+    return () => unsubscribe();
   }, []);
   return (
-    <div>
+    <div className="products-container">
       <button
         onClick={() => {
           setIsAdding(true);
@@ -30,19 +37,28 @@ export default function ProductList(props) {
       >
         Add product
       </button>
+      {/* Modal to add product */}
       {isAdding && (
         <Modal
           handleCloseModal={() => {
             setIsAdding(false);
           }}
         >
-          <ProductFormModal setIsAdding={setIsAdding} handleAddProduct={handleAddProduct} />
+          <ProductFormModal
+            setIsAdding={setIsAdding}
+            handleAddProduct={handleAddProduct}
+          />
         </Modal>
       )}
-      {products.map((product, productIndex)=>{
+      {/* Actual list to be displayed */}
+      {products.map((product, productIndex) => {
         return (
-            <ProductCard key={productIndex} product={product} setSelectedproduct={setSelectedproduct}/>
-        )
+          <ProductCard
+            key={productIndex}
+            product={product}
+            setSelectedproduct={setSelectedproduct}
+          />
+        );
       })}
     </div>
   );

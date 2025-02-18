@@ -3,10 +3,10 @@ import Layout from "./components/Layout";
 import ProductList from "./components/ProductList";
 import ProductView from "./components/ProductView";
 import { collection, addDoc } from "firebase/firestore";
-import { db } from "../firebase"; // Adjust path as needed
-
+import { db } from "../firebase";
 
 function App() {
+  //States for selected product and product list
   const [selectedProduct, setSelectedproduct] = useState(null);
   const [products, setProducts] = useState([
     {
@@ -36,47 +36,39 @@ function App() {
     },
   ]);
 
+  //Adding product to the list and db 
   const handleAddProduct = async (newProduct) => {
     try {
-      // Remove `id: 0` before adding to Firestore
+      // Remove id: 0 before adding to db
       const { id, ...productData } = newProduct;
-  
-      // Add product to Firestore
+
+      // Add product to db
       const docRef = await addDoc(collection(db, "products"), productData);
-  
-      // Update the local state with Firestore-generated ID
+
+      // Update the state
       const savedProduct = { ...newProduct, id: docRef.id };
-  
-      // Ensure comments are properly assigned productId
+
+      // Assign comments
       savedProduct.comments = savedProduct.comments.map((comment, index) => ({
         ...comment,
-        id: index + 1, // Assign unique comment ID
+        id: index + 1,
         productId: docRef.id,
       }));
-  
+
       setProducts([...products, savedProduct]);
-  
+
       console.log("Product added with ID:", docRef.id);
     } catch (error) {
       console.error("Error adding product:", error);
     }
   };
-    
-
-  function handleDeleteProduct(productToDelete) {
-
-  }
-
-  // function handleSaveData(currentProducts) {
-  //   localStorage.setItem(
-  //     "shop-kwik-products",
-  //     JSON.stringify({ products: currentProducts })
-  //   );
-  // }
+  // TODO: add delete logic
+  function handleDeleteProduct(productToDelete) {}
 
   return (
     <>
       <Layout setSelectedproduct={setSelectedproduct}>
+        {/* Display ProductView only if a product is selected */}
         {!selectedProduct && (
           <ProductList
             products={products}
@@ -86,7 +78,12 @@ function App() {
             setProducts={setProducts}
           />
         )}
-        {selectedProduct && <ProductView selectedProduct={selectedProduct} setSelectedproduct={setSelectedproduct} />}
+        {selectedProduct && (
+          <ProductView
+            selectedProduct={selectedProduct}
+            setSelectedproduct={setSelectedproduct}
+          />
+        )}
       </Layout>
     </>
   );
