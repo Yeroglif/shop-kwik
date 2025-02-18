@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+      "target": "ES6",
+      "module": "ESNext",
+      "jsx": "react-jsx",
+      "allowSyntheticDefaultImports": true,
+      "allowJs": true,
+      "checkJs": true,
+      "moduleResolution": "node",
+      "baseUrl": "./src",
+      "paths": {
+        "./components/*": ["components/*"],
+        "./context/*": ["context/*"], 
+        "@utils/*": ["utils/*"]
+      }
+    },
+    "include": ["src"]
+  }
+  
